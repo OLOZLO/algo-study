@@ -33,7 +33,7 @@ public class Main_girawhale {
 
             for (int i = 0; i < N; i++) {
                 int d = (int) (Math.pow(field[i][0] - field[cur[0]][0], 2) + Math.pow(field[i][1] - field[cur[0]][1], 2));
-                if (d >= C && dist[i] == Integer.MAX_VALUE)
+                if (d >= C && dist[i] > C)
                     que.add(new int[]{i, d});
             }
         }
