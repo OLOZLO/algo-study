@@ -24,13 +24,13 @@ public class Main_Taekyung2 {
         }
         for(int j = 2; j < N; j+=2) {
             for(int i = 0; i < N - j; i+=2) {
-                for(int k = 2, r = j; k <= j; k+=2, r-=2) {
+                for(int k = 2; k <= j; k+=2) {
                     int[] num = new int[4];
                     int op = i + k - 1;
-                    num[0] = calc(max[i][i + j - r], max[i + k][i + j], s[op]);
-                    num[1] = calc(max[i][i + j - r], min[i + k][i + j], s[op]);
-                    num[2] = calc(min[i][i + j - r], max[i + k][i + j], s[op]);
-                    num[3] = calc(min[i][i + j - r], min[i + k][i + j], s[op]);
+                    num[0] = calc(max[i][i + k - 2], max[i + k][i + j], s[op]);
+                    num[1] = calc(max[i][i + k - 2], min[i + k][i + j], s[op]);
+                    num[2] = calc(min[i][i + k - 2], max[i + k][i + j], s[op]);
+                    num[3] = calc(min[i][i + k - 2], min[i + k][i + j], s[op]);
                     Arrays.sort(num);
                     max[i][i + j] = Math.max(max[i][i + j], num[3]);
                     min[i][i + j] = Math.min(min[i][i + j], num[0]);
