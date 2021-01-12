@@ -23,6 +23,7 @@ public class Main_Taekyung2 {
             map[i] = s.toCharArray();
         }
         N = sc.nextInt();
+
         for(int i = 0; i < N; i++) {
             int h = R - sc.nextInt();
             simulation(h);
