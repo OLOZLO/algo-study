@@ -20,7 +20,9 @@ public class Main_girawhale {
                     if (blocks[i][j] == '.')
                         continue;
 
-                    if (blocks[i][j] == blocks[i + 1][j] && blocks[i][j] == blocks[i][j + 1] && blocks[i][j] == blocks[i + 1][j + 1]) {
+                    if (blocks[i][j] == blocks[i + 1][j]
+                            && blocks[i][j] == blocks[i][j + 1]
+                            && blocks[i][j] == blocks[i + 1][j + 1]) {
                         nextBlocks[i][j] = nextBlocks[i + 1][j] = nextBlocks[i][j + 1] = nextBlocks[i + 1][j + 1] = '.';
                         ck = true;
                     }
