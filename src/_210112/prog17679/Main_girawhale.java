@@ -60,7 +60,4 @@ public class Main_girawhale {
         return answer;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new Main_girawhale().solution(4, 5, new String[]{"CCBDE", "AAADE", "AAABF", "CCBBF"}));
-    }
 }
