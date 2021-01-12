@@ -1,7 +1,6 @@
 package _210112.boj18500;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -120,14 +119,7 @@ public class Main_ja {
 						}
 					}
 				}
-//				for (int ii = 0; ii < R; ii++) {
-//					for (int jj = 0; jj < C; jj++) {
-//						System.out.print(data[ii][jj]);
-//					}
-//					System.out.println();
-//				}
-//				System.out.println("----------------------");
-				
+		
 				// 열방향 탐색
 				// 최소 움직일 수 있는 값 구하기 (다른 클러스터, 바닥 만나면 stop)
 				int min = Integer.MAX_VALUE;
@@ -149,11 +141,13 @@ public class Main_ja {
 					// min값 만큼 옮기기
 					for(int[] p : move) {
 						data[p[0]][p[1]] = '.';
+					}
+					for(int[] p : move) {
 						data[p[0]+min][p[1]] = 'x';
 					}
-
 					break;
 				}
+				
 			}
 			// 막대 던질 차례 바꾸기
 			stick *= -1;
