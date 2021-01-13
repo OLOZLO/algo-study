@@ -55,16 +55,4 @@ public class Main_jyj {
         
         return answer;
     }
-
-//    public static void main(String[] args) {
-//        String dartResult = "1S2D*3T";
-////        String dartResult = "1D2S#10S";
-////        String dartResult = "1D2S0T";
-////        String dartResult = "1S*2T*3S";
-////        String dartResult = "1D#2S*3S";
-////        String dartResult = "1T2D3D#";
-////        String dartResult = "1D2S3T*";
-//
-//        solution(dartResult);
-//    }
 }
