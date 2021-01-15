@@ -3,20 +3,9 @@ package _210119.prog17683;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main_girawhale {
-    Map<String, String> map = new HashMap<>(); // #이 붙을 수 있는 음을 치환하기 위한 Map
-
     public String solution(String m, String[] musicinfos) {
-        // #이 붙은 음을 모두 소문자로 변경하기위해 초기화
-        map.put("C#", "c");
-        map.put("D#", "d");
-        map.put("F#", "f");
-        map.put("G#", "g");
-        map.put("A#", "a");
-
         m = changeStr(m);
 
         //입력받은 시간 HH:mm을 변환하기 위한 DateTimeFormatter
@@ -34,12 +23,14 @@ public class Main_girawhale {
             int playTime = (int) Duration.between(LocalTime.parse(infos[0], dtf), LocalTime.parse(infos[1], dtf)).toMinutes();
 
             String sheet = changeStr(infos[3]); //악보
+            System.out.println(sheet);
 
             // str을 n번 반복하는 문자열 생성 : new String(new char[n]).replace("\0", str)
             // playTime이 sheet의 길이보다 길다면 그만큼 반복재생되었기때문에 재생된 악보를 기존악보를 반복해 붙여줌
             String play = new String(new char[playTime / sheet.length()]).replace("\0", sheet);
             // 만약 노래가 중간에 끊겼다면 나머지 연산을 통해 끊긴만큼 악보를 잘라 append
             play += sheet.substring(0, playTime % sheet.length());
+            System.out.println(play);
 
             // m이 재생된 악보에 포함되고, 기존에 재생된 길이보다 길다면 값을 갱신
             if (play.contains(m) && ansLen < playTime) {
@@ -51,10 +42,12 @@ public class Main_girawhale {
         return ans;
     }
 
-    // Map에 저장된 값을 사용해 #이 붙은 음을 변경해 반환
+    // #이 붙는 음을 소문자로 변경해 반환
     public String changeStr(String str) {
-        for (String key : map.keySet())
-            str = str.replace(key, map.get(key));
-        return str;
+        return str.replace("A#", "a")
+                .replace("C#", "c")
+                .replace("D#", "d")
+                .replace("F#", "f")
+                .replace("G#", "g");
     }
 }
