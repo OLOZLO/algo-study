@@ -36,6 +36,8 @@ public class Main_girawhale {
         while (start <= end) {
             int mid = (start + end) / 2;
 
+            // DFS, Dijkstra 두 개 다 가능!
+//            if (dijkstra(mid)) {
             if (dfs(mid)) { // 리턴이 true면 가능하다는 의미이므로
                 ans = mid; // ans를 갱신해주고
                 end = mid - 1; // 최소 돈이 더 작을 때 가능한지 살펴본다
@@ -63,16 +65,39 @@ public class Main_girawhale {
             visit[cur[0]][cur[1]] = true;
 
             for (int[] a : adj[cur[0]]) {
-                // 최솟값 이내로 설치가 가능한 경우로 그냥 stack에 넣어준다
-                if (a[1] <= x)
-                    stack.push(new int[]{a[0], cur[1]});
-                // 최솟값보다 큰경우로 무료로 설치해야되는 경우.
-                // k가 0보다 크다면 아직 무료 설치 횟수가 남았으므로 -1한 뒤 stack에 추가
-                else if (cur[1] > 0) stack.push(new int[]{a[0], cur[1] - 1});
+                // 거리가 x보다 크다면 무료로 설치해야하는 경우이므로 잔여 설치 횟수에서 -1, 아니면 그냥 대입
+                int[] next = new int[]{a[0], cur[1] - (a[1] > x ? 1 : 0)};
+                if (next[1] >= 0) // 잔여횟수가 0이상이어야 탐색
+                    stack.push(next);
             }
         }
 
-        //스택이 비었을 때까지 N에 다다르지 못했기때문에 불가능한 경우로 false를 반환 
+        //스택이 비었을 때까지 N에 다다르지 못했기때문에 불가능한 경우로 false를 반환
+        return false;
+    }
+
+    static boolean dijkstra(int x) {
+        int[] dist = new int[N + 1]; // 현위치까지 도달했을 때 몇 번 무료설치했는지 저장
+        Arrays.fill(dist, K + 1); // 무료 설치는 최대 K개까지 가능하므로 K+1로 INF값 설정
+
+        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o[1])); // x 초과 개수순 오름차순 정렬
+        queue.add(new int[]{1, 0}); // {현재 위치, 가격 x를 넘은 개수}
+
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            if (cur[0] == N)
+                return true;
+
+            for (int[] a : adj[cur[0]]) {
+                int[] next = new int[]{a[0], cur[1] + (a[1] > x ? 1 : 0)}; //다음에 탐색할 컴퓨터가 x를 넘는다면 초과개수를 증가
+
+                if (next[1] <= K && next[1] < dist[next[0]]) { // 초과수가 K개 이하이고, 저장된 dist보다 작으면 탐색하기
+                    queue.add(next);
+                    dist[next[0]] = next[1];
+                }
+            }
+        }
+
         return false;
     }
 }
