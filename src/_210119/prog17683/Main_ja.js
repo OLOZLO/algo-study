@@ -49,10 +49,7 @@ function solution(m, musicinfos) {
         
         const startTime = musicinfo[0].split(':');
         const endTime = musicinfo[1].split(':');
-        // if (musicinfo[1]=='00:00'){
-        //     endTime[0] = '24';
-        // }
-        // 3 4 6  8  12  19 -> 4,11 00:00...
+
         const playTime = (Number(endTime[0]*60) + Number(endTime[1]))-(Number(startTime[0]*60) + Number(startTime[1]));
         
         // (1) 악보가 재생시간보다 짧을 경우, 이어붙이기 (반복)
