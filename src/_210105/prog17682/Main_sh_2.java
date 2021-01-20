@@ -12,26 +12,25 @@ public class Main_sh_2 {
 
             Deque<Integer> score = new ArrayDeque<>();
             while (matcher.find()) {
-                char[] s = matcher.group().toCharArray();
-                int tmp = 0;
+                int tmp = Integer.parseInt(matcher.group(1));
 
-                for (int j = 0; j < s.length; j++) {
-                    if (Character.isDigit(s[j]))
-                        tmp = tmp * 10 + s[j] - '0';
+                switch (matcher.group(2)) {
+                    case "D":
+                        tmp *= tmp;
+                        break;
+                    case "T":
+                        tmp *= tmp * tmp;
+                }
 
-                    else if (Character.isAlphabetic(s[j])) {
-                        if (s[j] == 'D')
-                            tmp *= tmp;
-                        else if (s[j] == 'T')
-                            tmp *= tmp * tmp;
-
-                    } else {
-                        if (s[j] == '*') {
-                            if (!score.isEmpty())
-                                score.push(score.pop() * 2);
-                            tmp *= 2;
-                        } else tmp *= -1;
-                    }
+                switch (matcher.group(3)) {
+                    case "*":
+                        if (!score.isEmpty())
+                            score.push(score.pop() * 2);
+                        tmp *= 2;
+                        break;
+                    case "#":
+                        tmp *= -1;
+                        break;
                 }
                 score.push(tmp);
             }
