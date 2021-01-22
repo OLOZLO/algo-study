@@ -17,13 +17,12 @@
 
 function solution(n, t, m, p) {
 
-    let cnt = 0; // (1) 숫자 0부터 시작
-
+    let cnt = 0; // 숫자 0부터 시작
     let data = '';
     while(data.length < t*m){
         data+=(cnt++).toString(n);  // n진법으로 변환해서 하나의 변수(data)에 저장 
     }
-    // (4) 튜브 차례에 맞는 숫자 하나씩 변수에(answer) 저장
+    // 튜브 차례에 맞는 숫자 하나씩 변수에(answer) 저장
     var answer = '';
     for (let i = 0; i < t; i++) {
         answer +=data[(p-1)+(m*i)];
