@@ -29,12 +29,11 @@
  * - 완전히 동일한 파일명은 없음 (대소문자, 숫자 앞부분(0) 차이)
  * 
  * [ 풀이 ]
- * (1) Files 순회 - head와 number 찾기
- *     [ 정규식 사용 ] 
+ * (1) Files 순회 - head와 number 찾아 새로운 배열에 객체로 저장
  *     ① head와 number의 경계선 찾기 (변수 boundary)
  *       [EX] img12.png => img와 12의 경계선(index)
  *       => String.property.search와 정규식(숫자 찾기) 사용
- *          TIP. search 함수는 indexOf함수와 유사함 -> 조건에 맞는 첫 번째 문자열의 인덱스를 반환
+ *          TIP. search 함수는 indexOf 함수와 유사함 -> 조건에 맞는 첫 번째 문자열의 인덱스를 반환 [EX]'abcbb'에서 'b'를 찾으면, 1을 반환 (0부터 시작)
  *               다른 점은 search는 정규식 사용이 가능함.
  * 
  *     ② head 찾기
@@ -42,7 +41,7 @@
  *       => 대문자로 변환
  *     ③ number 찾기
  *       => 원본 파일명.substr(boundary,number 길이); 
- *       => number 길이 : head를 제외한 파일명에서 search와 정규식(숫자아닌거 찾기==문자찾기) 사용해서 number의 끝 인덱스를 찾음
+ *       => number 길이 : head를 제외한 파일명에서 search와 정규식(문자 찾기) 사용해서 number의 끝 인덱스를 찾음
  *          [EX] "img12.png" => "12.png".search(문자 찾기) ==> 2 반환 
  *       TIP. substring과 substr의 차이
  *            substring(0,2)은 인덱스 0에서 인덱스 2까지 자르는 것
@@ -50,12 +49,12 @@
  * 
  *     ④ 찾은 head와 number, 그리고 index를 객체로 묶어서 배열에 저장 (reFiles)
  * 
- *     ⑤ reFiles를 재정의한 sort로 정렬
+ * (2) reFiles를 재정의한 sort로 정렬
  *       IF. head와 number가 동일하면 index 기준으로 정렬
  *       ELSE IF. head가 다르면, head 비교해서 정렬
  *       ELSE. number 비교해서 정렬
  * 
- *     ⑥ 재정렬한 reFiles의 순서대로 원본 파일들(files)에서 찾아 answer에 저장 (reFiles의 index 활용)
+ * (3) 정렬된 reFiles의 순서대로 원본 파일들(files)에서 찾아 answer에 저장 (reFiles의 index 활용)
  */
 
 function solution(files) {
@@ -66,10 +65,10 @@ function solution(files) {
     let reFiles = [];
     let idx = 0; // file 인덱스
     files.forEach(file => {
-        let boundary = file.search(regExpNumber); // (1) head와 number의 경계선
-        let head = file.substring(0,boundary).toUpperCase(); // (2) head 찾기
-        let numberLen = file.substring(boundary).search(regExpChar); // (3)-1 number 길이 찾기
-        let number = numberLen==-1?file.substring(boundary):file.substr(boundary,numberLen); // (3)-2 number 찾기 (주의)tail이 빈 값인 경우
+        let boundary = file.search(regExpNumber); // (1)-1 head와 number의 경계선
+        let head = file.substring(0,boundary).toUpperCase(); // (1)-2 head 찾기
+        let numberLen = file.substring(boundary).search(regExpChar); // (1)-3 number 길이 찾기
+        let number = numberLen==-1?file.substring(boundary):file.substr(boundary,numberLen); // (1)-3 number 찾기 (주의)tail이 빈 값인 경우
         
         // 새로운 배열(reFiles)에 저장 
         reFiles.push({idx,head,number});  // TIP. 객체 저장시 key와 value에 할당한 변수명이 같을 경우, key 생략 가능 (ES2015) [ex] {index:index} => {index}
@@ -78,21 +77,21 @@ function solution(files) {
     
  
     console.log(reFiles);
-    // (4) sort 정렬 기준 변경
+    // (2) sort 정렬 기준 변경  TIP.객체의 value값 접근은, object.key 혹은 object[key]로 접근 가능
     reFiles.sort((f1,f2)=>{
-        if(f1['head'] == f2['head'] && f1['number'] == f2['number']){   // (4)-1 head와 number가 동일하면 index 기준으로 정렬
+        if(f1['head'] == f2['head'] && f1['number'] == f2['number']){   // (2)-1 head와 number가 동일하면 index 기준으로 정렬
             return f1['idx'] - f2['idx'];
-        }else if(f1['head'] != f2['head']){    // (4)-2 head가 다르면, head 비교해서 정렬
+        }else if(f1['head'] != f2['head']){    // (2)-2 head가 다르면, head 비교해서 정렬
             if(f1['head'] < f2['head'])
                 return -1;
             else 
                 return 1;
-        }else{  // (4)-3 number 비교해서 정렬
+        }else{  // (2)-3 number 비교해서 정렬
             return f1['number'] - f2['number'];
         }
-    });
+    }); 
     var answer = [];
-    reFiles.forEach(file => {   // (5) reFiles의 순서대로 원본 파일들(files)에서 찾아 answer에 저장
+    reFiles.forEach(file => {   // (3) reFiles의 순서대로 원본 파일들(files)에서 찾아 answer에 저장
         answer.push(files[file.idx]);
     })
     return answer;
