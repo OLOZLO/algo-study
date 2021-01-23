@@ -12,15 +12,14 @@ public class Main_girawhale {
             Map<String, Integer> map = new HashMap<>();
 
             // 모든 알파벳을 미리 Map에 넣어둠
-            for (int i = 0; i < 26; i++)
-                map.put((char) ('A' + i) + "", i + 1);
+            for (int i = 0; i < 26; i++) map.put((char) ('A' + i) + "", i + 1);
 
             char[] arr = msg.toCharArray();
             int idx = 1;
             StringBuilder key = null; // Map에서 찾아볼 String
 
             while (idx <= msg.length()) {
-                //처음에 idx--를 통해 앞서 put했던 문자열의 마지막 인덱스스터 시작
+                //처음에 --idx를 통해 앞서 put했던 문자열의 마지막 인덱스부터 시작
                 key = new StringBuilder(arr[--idx] + "");
 
                 // 이미 Map에 존재하면 key에 덧붙이고 없다면 새로 사전에 등록해야 하기때문에 탈출
