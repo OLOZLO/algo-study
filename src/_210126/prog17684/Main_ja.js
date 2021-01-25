@@ -39,7 +39,7 @@ function solution(msg) {
     var answer = [];
     
     for (let i = 0; i < msg.length; i++) {
-        if(dictionary.hasOwnProperty(w+c)){ // w+c가 사전에 있으면
+        if((w+c) in dictionary){ // w+c가 사전에 있으면 => dictionary.hasOwnProperty(w+c) 이렇게 사용 가능
             w = w + c; // w+c를 현재 입력(w)으로 저장
             c = msg[i+2]; // c의 다음 글자(msg[i+2])를 다음 글자(c)로 저장  [EX] 'KAKAO'에서 w = 'A', c = 'K' 일 때, 'AK'가 사전에 있으면 w='AK', c='A' (c의 다음 글자)
         }else{
