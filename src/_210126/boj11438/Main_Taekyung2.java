@@ -19,7 +19,7 @@ public class Main_Taekyung2 {
         adj = new ArrayList[N + 1];
         visited = new boolean[N + 1];
         level = new int[N + 1];
-        ancestor = new int[N + 1][18];
+        ancestor = new int[18][N + 1];
         for(int i = 0; i <= N; i++)
             adj[i] = new ArrayList<>();
         for(int i = 0; i < N - 1; i++) {
@@ -32,7 +32,7 @@ public class Main_Taekyung2 {
         dfs(1, 1, 1);
         for(int i = 1; i <= 17; i++)
             for(int j = 1; j <= N; j++)
-                ancestor[j][i] = ancestor[ancestor[j][i - 1]][i - 1];
+                ancestor[i][j] = ancestor[i - 1][ancestor[i - 1][j]];
 
         int M = Integer.parseInt(br.readLine());
         for(int i = 0; i < M; i++) {
@@ -47,7 +47,7 @@ public class Main_Taekyung2 {
         if(visited[cur]) return;
         visited[cur] = true;
         level[cur] = curLevel;
-        ancestor[cur][0] = parent;
+        ancestor[0][cur] = parent;
 
         for(int child : adj[cur])
             dfs(child, cur, curLevel + 1);
@@ -64,17 +64,17 @@ public class Main_Taekyung2 {
             int diff = level[a] - level[b];
             for(int i = 0; i <= 17; i++) {
                 if((diff & (1 << i)) != 0)
-                    a = ancestor[a][i];
+                    a = ancestor[i][a];
             }
         }
 
         if(a == b) return a;
         for(int i = 17; i >= 0; i--) {
-            if(ancestor[a][i] != ancestor[b][i]) {
-                a = ancestor[a][i];
-                b = ancestor[b][i];
+            if(ancestor[i][a] != ancestor[i][b]) {
+                a = ancestor[i][a];
+                b = ancestor[i][b];
             }
         }
-        return ancestor[a][0];
+        return ancestor[0][a];
     }
 }
