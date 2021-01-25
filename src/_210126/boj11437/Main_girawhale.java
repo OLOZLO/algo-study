@@ -7,16 +7,16 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main_girawhale {
-    static int[] degree, parent;
+    static int[] depth, parent;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
-        ArrayList<Integer>[] adj = new ArrayList[N + 1];
-        degree = new int[N + 1];
-        parent = new int[N + 1];
+        ArrayList<Integer>[] adj = new ArrayList[N + 1]; // 연결 저장할 배결
+        depth = new int[N + 1]; // 나의 깊이는?
+        parent = new int[N + 1]; // 나의 부모 노드는?
 
         for (int i = 1; i <= N; i++)
             adj[i] = new ArrayList<>();
@@ -25,28 +25,28 @@ public class Main_girawhale {
             st = new StringTokenizer(br.readLine());
             int n1 = Integer.parseInt(st.nextToken()), n2 = Integer.parseInt(st.nextToken());
 
-            adj[n1].add(n2);
+            adj[n1].add(n2); // 양방향 연결
             adj[n2].add(n1);
         }
 
         Queue<Integer> queue = new LinkedList<>();
         queue.add(1);
         int h = 1;
-        degree[1] = 1;
+        depth[1] = 1; //1은 루트노드니까 깊이 = 1
 
         while (!queue.isEmpty()) {
             h++;
-            int size = queue.size();
+            int size = queue.size(); // 사이즈만큼 깊이 동일하다
 
             for (int s = 0; s < size; s++) {
                 int cur = queue.poll();
 
                 for (int i : adj[cur]) {
-                    if (degree[i] != 0) continue;
+                    if (depth[i] != 0) continue; // 깊이 이미 저장햇으면 패스
 
                     queue.add(i);
-                    degree[i] = h;
-                    parent[i] = cur;
+                    depth[i] = h;
+                    parent[i] = cur; // 아직 방문 안햇는데 나랑 연결되어있으니까 내 동생
                 }
             }
         }
@@ -62,11 +62,11 @@ public class Main_girawhale {
 
     static int lca(int n1, int n2) {
         while (n1 != n2) {
-            if (degree[n1] < degree[n2])
+            if (depth[n1] < depth[n2]) // 깊이가 높으면 부모로 올리기
                 n2 = parent[n2];
-            else if (degree[n1] > degree[n2])
+            else if (depth[n1] > depth[n2])
                 n1 = parent[n1];
-            else {
+            else {                    // 깊이 같으면 동시에 올리면서 같은거 찾기
                 n1 = parent[n1];
                 n2 = parent[n2];
             }
