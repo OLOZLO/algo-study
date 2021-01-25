@@ -48,6 +48,7 @@
  *            substr(0,2)은 인덱스 0에서 2개를 자르는 것
  *     
  *     BUT!!!! 새롭게 짠 정규식은 한번에 head와 number를 찾을 수 있음!
+ * 
  *     ④ 찾은 head와 number를 객체로 묶어서 배열에 저장 (reFiles)
  * 
  * (2) reFiles를 재정의한 sort로 정렬
@@ -71,7 +72,6 @@ function solution(files) {
         reFiles.push({idx,head,number});  // TIP. 객체 저장시 key와 value에 할당한 변수명이 같을 경우, key 생략 가능 (ES2015) [ex] {index:index} => {index}
         idx++;
     });
-    console.log(reFiles);
     // (2) sort 정렬 기준 변경  TIP.객체의 value값 접근은, object.key 혹은 object[key]로 접근 가능
     reFiles.sort((f1,f2)=>{
         if(f1['head'] != f2['head']){
@@ -83,7 +83,6 @@ function solution(files) {
     // TIP. localeCompare()는 문자열 비교 함수
     //      BUT. 비교연산자 사용해서 return 1 or -1 하는 코드가 localeCompare()을 썼을 때보다 좀 더 빠름 => 10ms이상으로 차이나는데 왜인지는...:(
     
-    console.log(reFiles);
     var answer = [];
     reFiles.forEach(file => {   // (3) reFiles의 순서대로 원본 파일들(files)에서 찾아 answer에 저장
         answer.push(files[file.idx]);
