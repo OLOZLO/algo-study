@@ -22,21 +22,17 @@ public class Main_ms {
 
                 int f1_idx = f1_head.length(), f2_idx = f2_head.length();
 
-                // 아래 ①과 ②는 문자열 HEAD의 사전순 정렬을 위한 리턴 값 설정입니다.
-                if (f1_head.toString().compareTo(f2_head.toString()) > 0) return 1; // ①
-                else if (f1_head.toString().compareTo(f2_head.toString()) < 0) return -1; // ②
+                // 두 파일의 HEAD가 같지 않으면 -> 사전식으로 정렬합니다.
+                if (!f1_head.toString().equals(f2_head.toString()))
+                    return f1_head.toString().compareTo(f2_head.toString());
 
-                // 두 파일의 HEAD가 같으면,
-                else {
-                    int f1_number = makeNumber(f1, f1_idx);
-                    int f2_number = makeNumber(f2, f2_idx);
+                // 두 파일의 HEAD가 HEAD가 같으면 -> NUMBER로 정렬합니다.
+                int f1_number = makeNumber(f1, f1_idx);
+                int f2_number = makeNumber(f2, f2_idx);
 
-                    // 아래 ①과 ②는 NUMBER의 오름차순 정렬을 위한 리턴 값 설정입니다.
-                    if (f1_number > f2_number)  return 1; // ①
-                    else if (f1_number < f2_number)  return -1; // ②
-
-                    else return 0; // NUMBER가 같으면 둘의 위치 순서를 바꾸지 않습니다. 위치 그대로 지키고 다음 쌍에 대해 정렬을 진행합니다.
-                }
+                // 두 숫자를 비교해 [크니? 작니? 같니?]를 판단할 필요 없이, compare 통해 계산된 값을 리턴하면
+                // 알아서 정렬해준다!
+                return Integer.compare(f1_number, f2_number);
             }
         };
 
