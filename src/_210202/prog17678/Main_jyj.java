@@ -3,7 +3,7 @@ package _210202.prog17678;
 import java.util.*;
 
 public class Main_jyj {
-    public int solution(String[] lines) {
+    public String solution(int n, int t, int m, String[] timetable) {
         String answer = "";
         LinkedList<Integer> list = new LinkedList<Integer>();
     
