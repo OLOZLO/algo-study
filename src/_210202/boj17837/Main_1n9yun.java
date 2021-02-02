@@ -11,9 +11,6 @@ public class Main_1n9yun {
             this.c = c;
             this.dir = dir;
         }
-        public void move(){
-            move(this.dir);
-        }
         public void move(int dir){
             this.r += delta[dir][0];
             this.c += delta[dir][1];
@@ -33,6 +30,7 @@ public class Main_1n9yun {
         int n = sc.nextInt();
         int k = sc.nextInt();
         int[][] map = new int[n+1][n+1];
+//        말들이 map위에서 어떤 모습인지
         StringBuilder[][] malMap = new StringBuilder[n+1][n+1];
         for(int i=1;i<=n;i++){
             for(int j=1;j<=n;j++){
@@ -40,6 +38,7 @@ public class Main_1n9yun {
             }
         }
 
+//        각 말들의 위치와 방향
         Mal[] mals = new Mal[k];
 
         for(int i=1;i<=n;i++){
@@ -64,12 +63,17 @@ public class Main_1n9yun {
             answer++;
 
             for(int i=0;i<mals.length;i++){
+//                i번 말이 있는 위치의 상태
                 StringBuilder currentList = malMap[mals[i].r][mals[i].c];
 
+//                그 상태에서 i번 말이 몇번 째 있는지
                 int thisMalIndex = currentList.indexOf(Integer.toString(i));
+//                이동하고 남는 말들
                 StringBuilder malRemain = new StringBuilder(currentList.substring(0, thisMalIndex));
+//                이동해야 하는 말들
                 StringBuilder malMove = new StringBuilder(currentList.substring(thisMalIndex));
 
+//                남는 말들로 바꿔주고
                 malMap[mals[i].r][mals[i].c] = malRemain;
                 
                 int nRow = mals[i].r + delta[mals[i].dir][0];
@@ -98,55 +102,15 @@ public class Main_1n9yun {
                 malMap[nRow][nCol].append(malMove);
 
                 if(shouldMove){
+//                    움직이는 경우 malMove를 구성하는 각각 말들을 이동시켜줌
                     for(int malIdx=0;malIdx<malMove.length();malIdx++){
                         mals[malMove.charAt(malIdx) - '0'].move(mals[i].dir);
                     }
                 }
-//                print(n, map, malMap, mals);
-//                sc.next();
-//                for(int t=0;t<20;t++) System.out.println();
                 if(malMap[nRow][nCol].length() >= 4) break out;
             }
         }
 
         System.out.println(answer > 1000 ? -1 : answer);
-    }
-
-    static void print(int n, int[][] map, StringBuilder[][] malMap, Mal[] mals){
-        for(int i=1;i<=n;i++){
-            int maxLength = -1;
-            for(int j=1;j<=n;j++){
-                maxLength = Math.max(maxLength, malMap[i][j].length());
-            }
-
-            if(maxLength == 0){
-                for(int j=1;j<=n;j++){
-                    System.out.print((map[i][j] == 0 ? "W" : map[i][j] == 1 ? "R" : map[i][j] == 2 ? "B" : "X") + "  ");
-                }
-                System.out.println();
-            }
-            for (int mIdx = maxLength - 1; mIdx >= 0; mIdx--) {
-                for(int j=1;j<=n;j++) {
-                    if(mIdx >= malMap[i][j].length()){
-                        if(mIdx == 0)
-                            System.out.print((map[i][j] == 0 ? "W" : map[i][j] == 1 ? "R" : map[i][j] == 2 ? "B" : "X") + "  ");
-                        else System.out.print("   ");
-                    }else{
-                        char c = malMap[i][j].charAt(mIdx);
-                        System.out.print(c + getArrow(mals[c - '0'].dir) + " ");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-        System.out.println("----------------------------------");
-    }
-    static String getArrow(int dir){
-        if(dir == 1) return "→";
-        else if(dir == 2) return "←";
-        else if(dir == 3) return "↑";
-        else if(dir == 4) return "↓";
-        else return "";
     }
 }
