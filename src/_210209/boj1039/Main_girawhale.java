@@ -33,12 +33,11 @@ public class Main_girawhale {
                 int tmp = num; // num이 바뀌면 안되니까 tmp를 생성
                 int n1 = tmp / pow[i] % 10;
                 int n2 = tmp / pow[j] % 10;
-                if (j == len - 1 && n1 == 0) continue; // j가 제일 앞을 가리키고, 바꿔야될 수가 0이면 제일 앞이 0이 되니까 ㅌㅌ
 
                 tmp = tmp - n1 * pow[i] - n2 * pow[j] +
                         n1 * pow[j] + n2 * pow[i]; // swap
 
-                if (visit[cnt][tmp]) continue; // 이미 방문했나여? 햇으면 제낌
+                if (tmp < pow[len - 1] || visit[cnt][tmp]) continue; // 바꿧는데 앞이 0이라서 너무 작아지거나, 이미 방문했나여? 그러면 제낌
                 visit[cnt][tmp] = true; // 안했으면 나 했다고 알려쥼
 
                 solve(cnt + 1, tmp); //다음!
