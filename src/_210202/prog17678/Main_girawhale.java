@@ -6,9 +6,7 @@ public class Main_girawhale {
     public String solution(int N, int T, int M, String[] timetable) {
         int[] times = Arrays.stream(timetable).mapToInt(t ->
                 Integer.parseInt(t.substring(0, 2)) * 60
-                        + Integer.parseInt(t.substring(3, 5))).toArray();
-
-        Arrays.sort(times);
+                        + Integer.parseInt(t.substring(3, 5))).sorted().toArray();
 
         int idx = 0;
         int time = 9 * 60; // 젤 처음은 9시 운행함

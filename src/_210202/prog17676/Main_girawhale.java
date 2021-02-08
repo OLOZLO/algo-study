@@ -15,7 +15,7 @@ class Main_girawhale {
             String[] split = lines[i].split(" ");
 
             int end = (int) (LocalTime.parse(split[1], dtf).toNanoOfDay() / 1_000_000); // 시간을 모두 초로 변경.
-                                                                                        // 1나노초 = 10^9초, 0이 6개 필요없으니까 없애버림
+                                                                                        // 1초 = 10^9나노초, 0이 6개 필요없으니까 없애버림
             int T = (int) (Double.parseDouble(split[2].substring(0, split[2].length() - 1)) * 1000); // 0.001초를 1로 변환했으니까 1000을 곱해줌
             int start = end - T + 1; //종료시간이 주어지니까 시작시간을 소요시간에서 빼서 구해주는데
             if (start < 0) start = 0; //전날부터 시작했을수도 있으니까 0보다 작으면 0으로 바꿔준다
