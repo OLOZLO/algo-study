@@ -1,18 +1,12 @@
 package _210202.boj5827;
 
+import java.awt.*;
 import java.util.*;
 
 public class Main_Taekyung2 {
-
-    static class Point {
-        int y, x;
-        Point(int y, int x) {
-            this.y = y;
-            this.x = x;
-        }
-    }
     static int N, M;
-    static Point C, D; static char[][] map;
+    static Point C, D;
+    static char[][] map;
     static int[][] count;
     static Queue<Point> q = new LinkedList<>();
 
@@ -28,9 +22,9 @@ public class Main_Taekyung2 {
             for(int j = 0; j < M; j++) {
                 map[i][j] = s.charAt(j);
                 if(map[i][j] == 'C')
-                    C = new Point(i, j);
+                    C = new Point(j, i);
                 else if(map[i][j] == 'D')
-                    D = new Point(i, j);
+                    D = new Point(j, i);
             }
         }
         C = down(C.y, C.x, 1); // 처음에 선장을 미리 바닥으로 내린다
@@ -68,6 +62,6 @@ public class Main_Taekyung2 {
             if(map[py + d][px] == '#') break;
             py += d;
         }
-        return new Point(py, px); // 밑으로 내린 위치 반환
+        return new Point(px, py); // 밑으로 내린 위치 반환
     }
 }
