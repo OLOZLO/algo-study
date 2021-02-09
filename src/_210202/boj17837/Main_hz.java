@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// 80% 정도에서 실패했습니다가 나옵니다...ㅠ 로직은 맞는것 같은데 대체 어느 부분이 잘못된건지 못찾겠슴다ㅠㅡㅠ
-
 public class Main_hz {
 	static int[][] dir = {{0, 0}, {0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 	
@@ -21,11 +19,6 @@ public class Main_hz {
 		void update(int i, int j) {
 			this.i = i;
 			this.j = j;
-		}
-
-		@Override
-		public String toString() {
-			return "Pos [i=" + i + ", j=" + j + ", dir=" + dir + "]";
 		}
 	}
 	
@@ -83,7 +76,7 @@ public class Main_hz {
 					}
 					
 					// 이동할 수 있는 높이가 존재하지 않거나(이미 3개 쌓여있음) 이동해서 쌓았을 때 4 이상이라면 땡땡
-					if (si == 0 || si+cnt-1 >= 4) {
+					if (si == 0 || (map[ni][nj][0] == 0 || map[ni][nj][0] == 1) && si+cnt-1 >= 4) {
 						fin = true;
 						result = turn;
 						break;
@@ -122,16 +115,6 @@ public class Main_hz {
 				
 				retry = false;
 				
-//				for (int i = 1; i <= N; i++) {
-//					for (int j = 1; j <= N; j++) {
-//						for (int hh = 1; hh < 4; hh++) {
-//							System.out.print(map[i][j][hh]+" ");
-//						}
-//						System.out.print(" | ");
-//					}
-//					System.out.println();
-//				}
-//				System.out.println();
 			}
 			
 			if (fin)
