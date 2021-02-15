@@ -106,7 +106,6 @@ public class Main_ja {
 							return;
 						}
 					}
-					return;
 				}
 				qu.add(new int[]{i,j});
 				visited[i][j] = true;
