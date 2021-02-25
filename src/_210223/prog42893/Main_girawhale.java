@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Main_girawhale {
+    //test
     Map<String, Set<WebPage>> refer = new HashMap<>();
 
     Pattern urlPattern = Pattern.compile("<head>[\\s\\S]*<meta[^>]*content=\"(?<url>\\S*)\"");
