@@ -15,8 +15,8 @@ public class Main_Taekyung2 {
         for(; i < n; i++) {
             int d = (i == 0) ? foods.get(i)[0] : foods.get(i)[0] - foods.get(i - 1)[0];
             // d * (n - i) -> 먹는데 걸리는 시간 작은 거부터 하나씩 지움, 제일 작은거 만큼 전체에서 뺀다
-            if(k < d * (n - i)) break;
-            k -= d * (n - i);
+            if(k < (long) d * (n - i)) break;
+            k -= (long) d * (n - i);
         }
         // 전부 다먹었으면 -1
         if(i == n) return -1;
