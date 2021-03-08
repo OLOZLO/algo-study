@@ -20,7 +20,7 @@ public class Main_girawhale {
             return "(" + v + ")" + // 아니면 괄호 싸고
                     u.substring(1, u.length() - 1).chars() // 앞뒤 잘라서 뒤집어 반환
                             .mapToObj(i -> i == '(' ? ')' : '(')
-                            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append);
+                            .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append);
     }
 
     boolean check(String str) {
