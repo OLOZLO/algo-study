@@ -44,7 +44,7 @@ public class Main_ja {
 		
 		// 벽을 기준으로 빈칸을 그룹화해서, 그룹이름이랑 개수 각각 저장함. 0은 벽, 그룹은 1부터 N개
 		// 100 -> 011
-		// 010 -> 210
+		// 010 -> 201
 		groupingMap(map, groupBlank, groupBlankCnt);
 		
 		// 벽 부수러 가쟈
