@@ -77,7 +77,7 @@ public class Main_girawhale {
                         continue;
                     }
 
-                    if (num == 0) num = area[ny][nx]; // 주변의 번호를 가져오고 내 번호가 0이면 걍 대입
+                    if(num == 0) num = area[ny][nx]; // 주변의 번호를 가져오고 내 번호가 0이면 걍 대입
                     else union(num, area[ny][nx]); //아니면 union해서 영역 합치기
                 }
                 area[cur[0]][cur[1]] = num; // 영역번호를 내 영역에 지정
