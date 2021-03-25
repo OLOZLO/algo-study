@@ -8,8 +8,8 @@ public class Main_girawhale {
         N = lock.length;
 
         for (int k = 0; k < 4; k++) {
-            for (int i = -20; i < 20; i++) {
-                for (int j = -20; j < 20; j++)
+            for (int i = -M; i < N; i++) {
+                for (int j = -M; j < N; j++)
                     if (solve(key, lock, i, j)) return true;  //key를 i와 j만큼 이동시켜 대볼거임. 근데 마지막까지 돌면 키 작동하는거니까 true 리턴
             }
 
