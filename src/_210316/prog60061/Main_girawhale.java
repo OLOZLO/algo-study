@@ -6,6 +6,7 @@ import java.util.List;
 public class Main_girawhale {
     int N;
     boolean[][] pillars, beams;
+    int[] dx = {-1, -1, -1, 0, 0, 0, 1, 1, 1}, dy = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
 
     public int[][] solution(int n, int[][] build_frame) {
         N = n;
@@ -21,13 +22,13 @@ public class Main_girawhale {
                 tmp[b[0]][b[1]] = false; // 먼저 칸에 설치된거 지워봄
 
                 // 모든 칸 돌면서 지워도 정상적으로 설치되는지 확인
-                for (int i = 0; i <= n; i++) {
-                    for (int j = 0; j <= n; j++) {
-                        if ((beams[i][j] && !checkBeam(new int[]{i, j})) ||
-                                (pillars[i][j] && !checkPillar(new int[]{i, j}))) { // 만약 조건에 부합하지 않으면 다시 칸에 원래대로 설치해줌
-                            tmp[b[0]][b[1]] = true;
-                            break;
-                        }
+                for (int k = 0; k < 9; k++) {
+                    int x = b[0] + dx[k], y = b[1] + dy[k];
+                    if (x < 0 || y < 0 || x > n || y > n) continue;
+                    if ((beams[x][y] && !checkBeam(new int[]{x, y})) ||
+                            (pillars[x][y] && !checkPillar(new int[]{x, y}))) { // 만약 조건에 부합하지 않으면 다시 칸에 원래대로 설치해줌
+                        tmp[b[0]][b[1]] = true;
+                        break;
                     }
                 }
             }
