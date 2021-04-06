@@ -12,8 +12,8 @@ import java.util.StringTokenizer;
 // DP를 사용해 이미 방문했던 칸을 다시 방문하면 기존에 저장했던 값을 반환
 // 모든 칸을 방문하면 더 이상 소요되는 시간이 없음
 // 보드의 크기 = V = N * M = 2500
-// 간선 수(방향 수) = E = 4
-// DFS의 시간복잡도 = V + E = 2500 + 4
+// 방향 수 = 4 => 간선 수 = 4 * NM
+// DFS의 시간복잡도 = V + E = O(NM)
 public class Main_girawhale {
     static int[] dy = {-1, 1, 0, 0}, dx = {0, 0, -1, 1};
     static boolean[][] visit;
