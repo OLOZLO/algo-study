@@ -79,6 +79,8 @@ public class Main_girawhale {
                 if (isDigit) {
                     while (zeroCnt < str.length() && str.charAt(zeroCnt) == '0')
                         zeroCnt++;
+
+                    this.str = str.substring(zeroCnt);
                 }
             }
 
