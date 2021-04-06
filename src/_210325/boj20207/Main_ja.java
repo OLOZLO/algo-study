@@ -22,25 +22,25 @@ public class Main_ja{
 			for (int j = start; j <= end; j++) {
 				day[j]+=1;
 			}
-		}
-		int result = 0;
+	}
+	int result = 0;
 		for (int i = 1; i < 366; i++) {
-			if(day[i] > 0) {
-				int col = 0;
-				int max = Integer.MIN_VALUE;
-				for (int j = i; j < 366; j++) {
-					if(day[j] > 0) {
-						col++;
-						max = Math.max(max, day[j]);
-					}
-					else {
-						result += col*max;
-						i=j;
-						break;
-					}
+		if(day[i] > 0) {
+			int col = 0;
+			int max = Integer.MIN_VALUE;
+			for (int j = i; j < 366; j++) {
+				if(day[j] > 0) {
+					col++;
+					max = Math.max(max, day[j]);
+				}
+				else {
+					result += col*max;
+					i=j;
+					break;
 				}
 			}
 		}
+	}
 		System.out.println(result);
 		
 	}

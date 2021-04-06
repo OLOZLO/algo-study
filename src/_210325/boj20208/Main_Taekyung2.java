@@ -1,14 +1,10 @@
 package _210325.boj20208;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main_Taekyung2 {
-    static int N, M, H, ret, s;
-    static int[] pick;
-    static int[][] map;
+    static int N, M, H, ret;
     static boolean[] visited;
     static Point home;
     static ArrayList<Point> mincho = new ArrayList<>();
@@ -18,49 +14,33 @@ public class Main_Taekyung2 {
         N = sc.nextInt();
         M = sc.nextInt();
         H = sc.nextInt();
-        map = new int[N][N];
         for(int i = 0; i < N; i++) {
             for(int j = 0; j < N; j++) {
-                map[i][j] = sc.nextInt();
-                if(map[i][j] == 1)
+                int n = sc.nextInt();
+                if(n == 1)
                     home = new Point(j, i);
-                else if(map[i][j] == 2)
+                else if(n == 2)
                     mincho.add(new Point(j, i));
             }
         }
-        mincho.add(home);
-        Collections.reverse(mincho);
-        s = mincho.size();
-        pick = new int[s];
-        visited = new boolean[s];
-        simulation(1);
+        visited = new boolean[mincho.size()];
+        simulation(home, 0, M);
         System.out.println(ret);
     }
 
-    static void simulation(int cnt) {
-        if(cnt == s) {
-            int heal = M, ans = 0;
-            for(int i = 1; i < s; i++) {
-                heal -= dist(pick[i - 1], pick[i]);
-                if(heal >= 0) ans++;
-                else break;
-                heal += H;
-                if(heal >= dist(0, pick[i]))
-                    ret = Math.max(ret, ans);
-            }
-            return;
-        }
-        for(int i = 1; i < s; i++) {
-            if(!visited[i]) {
+    static void simulation(Point cur, int cnt, int heal) {
+        if(dist(cur, home) <= heal) ret = Math.max(ret, cnt);
+        for(int i = 0; i < mincho.size(); i++) {
+            int d = dist(cur, mincho.get(i));
+            if(!visited[i] && heal >= d) {
                 visited[i] = true;
-                pick[cnt] = i;
-                simulation(cnt + 1);
+                simulation(mincho.get(i), cnt + 1, heal - d + H);
                 visited[i] = false;
             }
         }
     }
 
-    static int dist(int a, int b) {
-        return Math.abs(mincho.get(a).y - mincho.get(b).y) + Math.abs(mincho.get(a).x - mincho.get(b).x);
+    static int dist(Point a, Point b) {
+        return Math.abs(a.y - b.y) + Math.abs(a.x - b.x);
     }
 }
