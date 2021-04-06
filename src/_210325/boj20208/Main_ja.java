@@ -1,6 +1,10 @@
 package _210325.boj20208;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Main_ja {
 	/**
@@ -14,46 +18,68 @@ public class Main_ja {
 	 * 얼마나 많은 민초를 마시고 집으로 돌아올 수 있는지
 	 * 
 	 */
-	static int max = 0;
-	static int[][] dt = {{0,1},{0,-1},{1,0},{-1,0}};
 	static int N, M, H;
-	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		N = in.nextInt();
-		M = in.nextInt();
-		H = in.nextInt();
-		int[][] map = new int[N][N];
-		boolean[][] visited = new boolean[N][N];
+	static int result;
+	static int home = 0;
+	static int stoi(String str) {return Integer.parseInt(str);}
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = stoi(st.nextToken());
+		M = stoi(st.nextToken());
+		H = stoi(st.nextToken());
+		
+		ArrayList<Milk> milks = new ArrayList<>();
+		milks.add(new Milk(home,null)); 
+		int milkCnt = 1;
 		int[] home = new int[2];
 		for (int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < N; j++) {
-				map[i][j] = in.nextInt();
-				if(map[i][j] == 1) {
+				int num = stoi(st.nextToken());
+				if(num == 1)
 					home = new int[] {i,j};
-				}
+				else if(num == 2) 
+					milks.add(new Milk(milkCnt++,new int[] {i,j}));
 			}
 		}
-		dfs(map, visited, home, M, 0);
-		System.out.println(max);
+		milks.get(0).point = home;
+
+		result = 0;
+		solve(milks, new boolean[milkCnt], M, milks.get(0));
+		System.out.println(result);
 	} 
-	
-	public static void dfs(int[][] map, boolean[][] visited, int[] point,int m, int cnt) {
-		for (int d = 0; d < 4; d++) {
-			int i = point[0] + dt[d][0];
-			int j = point[1] + dt[d][1];
-			if(i<0||j<0||i>=N||j>=N) continue;
-			if(visited[i][j] || m <= 0) continue;
-			if(map[i][j]==1) {
-				max = Math.max(max, cnt);
+	static void solve(ArrayList<Milk> milks, boolean[] visited, int hp, Milk milk) {
+		for(Milk next : milks) {
+			if(milk.name == next.name || visited[next.name]) continue;
+			int[] p1 = milk.point;
+			int[] p2 = next.point;
+			int dist = Math.abs(p1[0]-p2[0]) + Math.abs(p1[1]-p2[1]);
+			if(hp - dist < 0) continue;	
+			
+			if(next.name == home) {
+				int cnt = 0;
+				for(boolean v : visited)
+					if(v) cnt++;
+				result = Math.max(result, cnt);
 				continue;
 			}
-			visited[i][j] = true;
-			if(map[i][j] == 2)
-				dfs(map, visited, new int[] {i,j}, m-1+H, cnt+1);
-			else
-				dfs(map, visited, new int[] {i,j}, m-1, cnt);
-			visited[i][j] = false;
+			
+			visited[next.name] = true;
+			solve(milks, visited, hp-dist+H, next);
+			visited[next.name] = false;
 		}
 	}
+	static class Milk {
+		int name;
+		int[] point;
+		
+		public Milk(int name, int[] point) {
+			this.name = name;
+			this.point = point;
+		}
+	}
+	
+
 
 }

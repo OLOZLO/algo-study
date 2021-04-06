@@ -49,15 +49,26 @@ function checkBeam(column,beam,i,j){
     const n = column.length;
     return (j>0 && (column[i][j-1] || column[i+1][j-1])) || ( i>0 && i<n && beam[i-1][j] && beam[i+1][j])
 }
-function checkFrame(column,beam){
+const dx = [-1, -1, -1, 0, 0, 0, 1, 1, 1];
+const dy = [-1, 0, 1, -1, 0, 1, -1, 0, 1];
+
+function checkFrame(column,beam,i,j){
     let n = column.length;
-    // 전체 순회해서 제대로 연결 안 된 frame 발견하면 false 반환
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            if(column[i][j] && !checkColumn(column, beam, i, j)) return false;
-            if(beam[i][j] && !checkBeam(column, beam, i, j)) return false;
-        }
+    for (let d = 0; d < 9; d++) {
+        let ii = i + dx[d];
+        let jj = j + dy[d];
+        
+        if(ii<0||jj<0||ii>=n||jj>=n) continue;
+        if(column[ii][jj] && !checkColumn(column, beam, ii, jj)) return false;
+        if(beam[ii][jj] && !checkBeam(column, beam, ii, jj)) return false;
     }
+    // 전체 순회해서 제대로 연결 안 된 frame 발견하면 false 반환
+    // for (let i = 0; i < n; i++) {
+    //     for (let j = 0; j < n; j++) {
+    //         if(column[i][j] && !checkColumn(column, beam, i, j)) return false;
+    //         if(beam[i][j] && !checkBeam(column, beam, i, j)) return false;
+    //     }
+    // }
     return true;
 }
 
@@ -83,10 +94,10 @@ function deleteFrame(column,beam,frame){
     
     const temp = tempFrame[j]; 
     tempFrame[j] = false; // 일단 삭제해보고
-    if(!checkFrame(column,beam)) // 하나라도 제대로 연결 안된 frame 있으면 
+    if(!checkFrame(column,beam,i,j)) // 하나라도 제대로 연결 안된 frame 있으면 
         tempFrame[j] = temp; // 원상복귀
 }
 
 // console.log(solution(5,[[1,0,0,1],[1,1,1,1],[2,1,0,1],[2,2,1,1],[5,0,0,1],[5,1,0,1],[4,2,1,1],[3,2,1,1]]));
 
-// console.log(solution(5, [[0,0,0,1],[2,0,0,1],[4,0,0,1],[0,1,1,1],[1,1,1,1],[2,1,1,1],[3,1,1,1],[2,0,0,0],[1,1,1,0],[2,2,0,1]]));
+console.log(solution(5, [[0,0,0,1],[2,0,0,1],[4,0,0,1],[0,1,1,1],[1,1,1,1],[2,1,1,1],[3,1,1,1],[2,0,0,0],[1,1,1,0],[2,2,0,1]]));
