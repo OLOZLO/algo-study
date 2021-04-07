@@ -35,20 +35,20 @@ public class Main_ja {
 		int[] input = inputToIntArr(br.readLine(), " ");
 		int N = input[0]; // 날짜 수
 		int M = input[1]; // 디저트 종류 수
-		int[][] desert = new int[M][N];
+		int[][] dessert = new int[M][N];
 		for (int i = 0; i < M; i++) {
-			desert[i] = inputToIntArr(br.readLine(), " ");
+			dessert[i] = inputToIntArr(br.readLine(), " ");
 		}
 		int[][] dp = new int[M][N]; // n기간에 m디저트를 먹을 때의 만족도 최대 값 저장
 		for (int i = 0; i < M; i++) { 
-			dp[i][0] = desert[i][0];
+			dp[i][0] = dessert[i][0];
 		}
 		int day = 0;
 		int result = 0;
 		while (++day != N) { // N 기간동안
 			for (int cur = 0; cur < M; cur++) { // 전날 먹은 음식
 				for (int next = 0; next < M; next++) { // 담날 먹은 음식
-					int sum = (cur == next ? (desert[next][day] / 2) : desert[next][day]) + dp[cur][day - 1];
+					int sum = (cur == next ? (dessert[next][day] / 2) : dessert[next][day]) + dp[cur][day - 1];
 					dp[next][day] = Math.max(sum, dp[next][day]);
 				}
 			}
