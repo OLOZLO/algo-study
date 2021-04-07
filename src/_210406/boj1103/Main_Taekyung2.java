@@ -31,6 +31,7 @@ public class Main_Taekyung2 {
         for(int i = 0; i < N; i++) {
             String s = sc.next();
             Arrays.fill(count[i], -1);
+
             for(int j = 0; j < M; j++) {
                 char c = s.charAt(j);
                 if(c != 'H')
@@ -39,21 +40,30 @@ public class Main_Taekyung2 {
         }
 
         int ret = dfs(0, 0);
+        // dfs(0, 0)이 INF보다 큰 값을 리턴했다면 무한 루프를 도는 것
         System.out.println(ret >= INF ? -1 : ret);
     }
 
     public static int dfs(int y, int x) {
+        // DP 기저 조건, 범위 벗어나거나 H이면 0 리턴
         if(y < 0 || x < 0 || y >= N || x >= M || map[y][x] == 0) return 0;
+        // 역방향 간선이 존재하므로 사이클이 존재, max값을 리턴하는 구조이므로 큰 값 INF 리턴
         if(visit[y][x]) return INF;
+
         int ret = count[y][x], n = map[y][x];
+        // 이미 해결한 부분 문제라면 그대로 정답 리턴
         if(ret != -1) return ret;
+
         ret = 0;
         visit[y][x] = true;
         for(int d = 0; d < 4; d++) {
             int ny = y + dy[d] * n , nx = x + dx[d] * n;
+            // 현재 위치에서 갈 수 있는 4곳 중 가장 큰 값 + 1
             ret = Math.max(ret, dfs(ny, nx) + 1);
         }
+        // dfs 종료 전 방문 체크를 해제
         visit[y][x] = false;
+
         return count[y][x] = ret;
     }
 }

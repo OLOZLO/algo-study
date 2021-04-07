@@ -33,20 +33,29 @@ public class Main_Taekyung2 {
             for (int j = 0; j < N; j++)
                 dessert[i][j] = stoi(st.nextToken());
         }
+
         System.out.println(dp(0, 0));
     }
 
-    static int dp(int day, int prev) {
+    static int dp(int prev, int day) {
+        // 종료 조건
         if(day == N) return 0;
+
         int ret = cache[prev][day];
         if(ret != -1) return ret;
+
         ret = 0;
         for(int i = 0; i < M; i++) {
             int cur = dessert[i][day];
+
+            // 첫 번째 날이 아니고, 전 날과 같은 디저트 일 때 만족도 절반
             if(day != 0 && i == prev)
                 cur /= 2;
-            ret = Math.max(ret ,dp(day + 1, i) + cur);
+
+            // 모든 디저트 전부 해본다
+            ret = Math.max(ret ,dp(i, day + 1) + cur);
         }
+
         return cache[prev][day] = ret;
     }
 }

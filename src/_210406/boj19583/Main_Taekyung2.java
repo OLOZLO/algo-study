@@ -21,13 +21,16 @@ public class Main_Taekyung2 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int[] time = Stream.of(br.readLine().split(" ")).mapToInt(x -> getMinute(x)).toArray();
+
         HashMap<String, Boolean> check = new HashMap<>();
         int ret = 0;
         String input;
+
         while((input = br.readLine()) != null) {
             String[] log = input.split(" ");
             int t = getMinute(log[0]);
             String name = log[1];
+
             if(t <= time[0]) {
                 check.put(name, false);
             } else if(t >= time[1] && t <= time[2]) {
@@ -37,6 +40,7 @@ public class Main_Taekyung2 {
                 }
             }
         }
+
         System.out.println(ret);
     }
 
