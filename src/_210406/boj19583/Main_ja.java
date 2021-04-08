@@ -53,10 +53,9 @@ public class Main_ja {
 
 			if (time.compareTo(S) <= 0) // 입실
 				enter.add(nickname);
-			else if (time.compareTo(E) >= 0 && time.compareTo(Q) <= 0 && enter.contains(nickname)) { // 퇴실
-				enter.remove(nickname);
+			else if (time.compareTo(E) >= 0 && time.compareTo(Q) <= 0 && enter.remove(nickname))  // 퇴실
 				ans++;
-			}
+			
 		}
 		System.out.println(ans);
 	}

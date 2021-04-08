@@ -34,7 +34,6 @@ public class Main_ja {
 	static int[][] dt = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 	static int HOLE = -1;
 	static int N, M;
-	static int result;
 
 	public static int[] inputToIntArr(String str, String separator) {
 		return Arrays.stream(str.split(separator)).mapToInt(Integer::parseInt).toArray();
@@ -48,49 +47,48 @@ public class Main_ja {
 
 		int[][] move = new int[N][M];
 		for (int[] m : move) {
-			String[] str = br.readLine().split("");
+			char[] c = br.readLine().toCharArray();
 			for (int j = 0; j < M; j++) {
-				m[j] = str[j].equals("H") ? HOLE : Integer.parseInt(str[j]); // 구멍인 경우 -1 저장
+				m[j] = c[j] == 'H' ? HOLE : c[j] - '0'; // 구멍인 경우 -1 저장
 			}
 		}
-		result = 0;
-		dfs(move, new boolean[N][M], new int[N][M], new Node(0, 0, 0));
-		System.out.println(result);
+		int[][] dp = new int[N][M];
+		dfs(move, new boolean[N][M], dp, new Node(0, 0));
+		System.out.println(dp[0][0]);
 
 	}
 
-	static void dfs(int[][] move, boolean[][] visited, int[][] dp, Node cur) {
+	static int dfs(int[][] move, boolean[][] visited, int[][] dp, Node cur) {
+		if (visited[cur.r][cur.c]) { // 방문한 곳 또 방문하면, 사이클 발생 (무한)
+			System.out.println(-1);
+			System.exit(0);
+		}
+		if (dp[cur.r][cur.c] > 0)  // 전에 탐색했던 곳 방문이면 저장한 값 return
+			return dp[cur.r][cur.c];
+		
+		int cnt = 1;
+		visited[cur.r][cur.c] = true;
+		
 		for (int d = 0; d < 4; d++) {
 			int r = cur.r + dt[d][0] * move[cur.r][cur.c];
 			int c = cur.c + dt[d][1] * move[cur.r][cur.c];
-			if (r < 0 || c < 0 || r >= N || c >= M || move[r][c] == HOLE) { // 게임 끝 조건
-				result = Math.max(cur.cnt + 1, result);
+			if (r < 0 || c < 0 || r >= N || c >= M || move[r][c] == HOLE)  // 게임 끝 조건
 				continue;
-			}
-			if (visited[r][c]) { // 방문한 곳 또 방문하면, 사이클 발생 (무한)
-				System.out.println(-1);
-				System.exit(0);
-			}
-			if (dp[r][c] != 0 && dp[r][c] >= cur.cnt + 1)
-				continue; // 전에 탐색했던 곳 방문 -> 현재 cnt가 더 적으면 pass
 
-			dp[r][c] = cur.cnt + 1;
-			visited[r][c] = true;
-			dfs(move, visited, dp, new Node(r, c, cur.cnt + 1)); // 다음 지점으로 이동
-			visited[r][c] = false;
+			cnt = Math.max(cnt, dfs(move, visited, dp, new Node(r, c))+1); // 다음 지점으로 이동
 		}
+		
+		visited[cur.r][cur.c] = false;
+		return dp[cur.r][cur.c] = cnt;
 	}
 
 	static class Node {
 		int r, c;
-		int cnt;
 
-		public Node(int r, int c, int cnt) {
+		public Node(int r, int c) {
 			this.r = r;
 			this.c = c;
-			this.cnt = cnt;
 		}
-
 	}
 
 }
