@@ -17,16 +17,16 @@ public class Main_ms {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int S = calTime(st.nextToken().split(":"));
-        int E = calTime(st.nextToken().split(":"));
-        int Q = calTime(st.nextToken().split(":"));
+        int S = calTime(st.nextToken());
+        int E = calTime(st.nextToken());
+        int Q = calTime(st.nextToken());
         HashSet<String> before = new HashSet<>();                   // before : 입장 확인을 해두기 위해 사용합니다.
         int answer = 0;
         String input = null;
 
         while ((input = br.readLine()) != null) {                   // EOF 만날때까지 한 줄씩 입력 받습니다.
             st = new StringTokenizer(input);
-            int time = calTime(st.nextToken().split(":"));
+            int time = calTime(st.nextToken());
             String name = st.nextToken();
 
             // 입력 시간이 개총 시작 시간(S) 보다 짧으면 before 에 넣어 입장 확인을 해둡니다.
@@ -48,11 +48,12 @@ public class Main_ms {
     }
 
     // calTime()
-    // 입력 파라미터 : 구분자(:)로 앞뒤 짤린 값을 원소로 갖는 배열.
+    // 입력 파라미터 : 시간을 나타내는 문자열.
     // 리턴        : "HH:mm" 포맷의 시간을 분단위로 환산한 값을 리턴.
-    static int calTime(String[] str) {
-        int hour = Integer.parseInt(str[0]);
-        int min = Integer.parseInt(str[1]);
+    static int calTime(String str) {
+        String[] splited = str.split(":");
+        int hour = Integer.parseInt(splited[0]);
+        int min = Integer.parseInt(splited[1]);
 
         return hour * 60 + min;
     }
