@@ -6,9 +6,8 @@ import java.io.InputStreamReader;
 /*
 
 결과 : 성공
-시간복잡도 : O(4*N*M)
-메모이제이션을 사용하여 이미 방문하여 그 때 계산을 한 결과를 그대로 사용하기 때문에 O(N*M) 이라고 생각했고
-4를 곱한 이유는 각 정점에서 사방을 탐색하며 dp의 크기를 벗어나는 경우가 있을 수 있기 때문에 위와 같이 생각했습니다.
+시간복잡도 : O(N*M)
+메모이제이션을 사용하여 이미 방문하여 그 때 계산을 한 결과를 그대로 사용하기 때문에 O(N*M) 이라고 생각했습니다.
 
 */
 public class Main_hz {
@@ -52,23 +51,23 @@ public class Main_hz {
         if (dp[p.i][p.j] != 0) return dp[p.i][p.j];
         
         visited[p.i][p.j] = true;
+        dp[p.i][p.j] = 1;
 
         for (int d = 0; d < dir.length; d++) {
             int ni = p.i + board[p.i][p.j]*dir[d][0];
             int nj = p.j + board[p.i][p.j]*dir[d][1];
 
             // 게임이 종료되는 경우
-            if (ni < 0 || ni >= N || nj < 0 || nj >= M || board[ni][nj] == -1) {
-                dp[p.i][p.j] = Math.max(dp[p.i][p.j], 1);
-                continue;
+            if (ni < 0 || ni >= N || nj < 0 || nj >= M || board[ni][nj] == -1) continue;
+
+            // 만약 다음에 이동할 위치를 이미 방문했을 경우 무한루프에 빠질 수 있기 때문에 -1 출력 후 종료
+            if (visited[ni][nj]) {
+                System.out.println(-1);
+                System.exit(0);
             }
 
-            // 만약 다음에 이동할 위치를 이미 방문했을 경우 무한루프에 빠질 수 있기 때문에 -1 리턴
-            if (visited[ni][nj]) return dp[p.i][p.j] = -1;
-
-            int tmp = dfs(new Pos(ni, nj), visited);
-            if (tmp == -1) return dp[p.i][p.j] = -1;    // 만약 다음 위치에서 점프가 불가능해서 -1를 리턴하면 현재 위치에 -1 저장 후 리턴
-            else dp[p.i][p.j] = Math.max(dp[p.i][p.j], tmp+1);  // 다음 위치에서 점프가 가능 할 경우, 현재 위치에서 점프 가능한 횟수와 다음 위치에서 점프 가능한 횟수+1 중 최댓값 저장
+            // 다음 위치에서 점프가 가능 할 경우, 현재 위치에서 점프 가능한 횟수와 다음 위치에서 점프 가능한 횟수+1 중 최댓값 저장
+            dp[p.i][p.j] = Math.max(dp[p.i][p.j], dfs(new Pos(ni, nj), visited)+1);
         }
 
         visited[p.i][p.j] = false;

@@ -38,14 +38,15 @@ public class Main_hz {
             Arrays.sort(tmp);
 
             for (int f = 0; f < K; f++) {
-                if (dp[f][day-1] == tmp[K-1]) { // 전날 만족감이 최대였던 음식과 현재 먹으려는 음식이 같을 경우
-                    // 음식의 종류가 하나이면 (전날 만족감의 최대값 + 현재 먹으려는 음식의 만족감 / 2) 저장
-                    if (K == 1) dp[f][day] = dp[f][day-1]+food[f][day]/2;
-                    // 아닐경우 (전날 만족감의 최대값 + 현재 먹으려는 음식의 만족감 / 2) 과 (전날 만족감이 두번째 높은 값 + 현재 먹으려는 음식의 만족감) 중 최대값 저장
-                    else dp[f][day] = Math.max(dp[f][day-1]+(food[f][day]/2), tmp[K-2]+food[f][day]);
+                // 음식의 종류가 하나이면 (전날 만족감의 최대값 + 현재 먹으려는 음식의 만족감 / 2) 저장
+                if (K == 1) dp[f][day] = dp[f][day-1]+food[f][day]/2;
+                else {
+                    // 전날 만족감이 최대였던 음식과 현재 먹으려는 음식이 같을 경우
+                    // (전날 만족감의 최대값 + 현재 먹으려는 음식의 만족감 / 2) 과 (전날 만족감이 두번째 높은 값 + 현재 먹으려는 음식의 만족감) 중 최대값 저장
+                    if (dp[f][day-1] == tmp[K-1]) dp[f][day] = Math.max(dp[f][day-1]+(food[f][day]/2), tmp[K-2]+food[f][day]);
+                    // 전날 먹은 음식과 현재 먹으려는 음식이 다를 경우 전날까지 만족감의 최댓값 + 현재 음식의 만족감 저장
+                    else dp[f][day] = tmp[K-1]+food[f][day];
                 }
-                // 전날까지 만족감의 최댓값 + 현재 음식의 만족감 저장
-                else dp[f][day] = tmp[K-1]+food[f][day];
             }
         }
 

@@ -27,9 +27,7 @@ public class Main_hz {
 
         // HH:MM 형식의 개강총회 시작 시간, 종료 시간, 스트리밍 종료 시간을 분 단위로 변경합니다.
         for (int i = 0; i < 3; i++) {
-            String t = st.nextToken();
-            schedule[i] += Integer.parseInt(t.split(":")[0])*60;
-            schedule[i] += Integer.parseInt(t.split(":")[1]);
+            schedule[i] = toMin(st.nextToken());
         }
 
         HashSet<String> attendant = new HashSet<>();
@@ -38,18 +36,16 @@ public class Main_hz {
         String input;
         while((input = br.readLine()) != null) {
             st = new StringTokenizer(input);
-            String time = st.nextToken();
 
             // 채팅이 입력된 시간을 분 단위로 변경합니다.
-            int now = Integer.parseInt(time.split(":")[0])*60;
-            now += Integer.parseInt(time.split(":")[1]);
+            int now = toMin(st.nextToken());
+            String name = st.nextToken();
 
             // 개강 총회 시작 전 채팅을 한 학생들을 참석자 목록에 넣어줍니다.
-            if (now <= schedule[0]) attendant.add(st.nextToken());
+            if (now <= schedule[0]) attendant.add(name);
             // 개강 총회 종료 시간 ~ 스트리밍 종료 시간 간에 채팅을 한 학생 중
             // 참석자 목록에 있는 학생들은 카운팅 한 후 중복 카운팅 방지를 위해 참석자 목록에서 제거해줍니다.
             else if (now >= schedule[1] && now <= schedule[2]) {
-                String name = st.nextToken();
                 if (attendant.contains(name)) {
                     result++;
                     attendant.remove(name);
@@ -62,4 +58,10 @@ public class Main_hz {
         System.out.println(result);
 
     }
+
+    public static int toMin(String s) {
+        String[] time = s.split(":");
+        return  Integer.parseInt(time[0])*60+Integer.parseInt(time[1]);
+    }
+
 }
