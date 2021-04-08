@@ -30,13 +30,13 @@ public class Main_girawhale {
         for (int i = 0; i < M; i++) // 첫날은 전날 먹은 디저트가 없기 때문에 그대로 복사
             dp[i][0] = dessert[i][0];
 
-        for (int i = 1; i < N; i++) { // 날짜별 탐색
-            for (int j = 0; j < M; j++) { // 전날 먹은 디저트
-                for (int k = 0; k < M; k++) { // 오늘 먹을 디저트
-                    if (j == k) // 전날 먹은거랑 겹치면?
-                        dp[j][i] = Math.max(dp[j][i], dessert[j][i] / 2 + dp[k][i - 1]); // 오늘 먹을 디저트의 절반만 누적
+        for (int day = 1; day < N; day++) { // 날짜별 탐색
+            for (int prevDessert = 0; prevDessert < M; prevDessert++) { // 전날 먹은 디저트
+                for (int todayDessert = 0; todayDessert < M; todayDessert++) { // 오늘 먹을 디저트
+                    if (prevDessert == todayDessert) // 전날 먹은거랑 겹치면?
+                        dp[prevDessert][day] = Math.max(dp[prevDessert][day], dessert[prevDessert][day] / 2 + dp[todayDessert][day - 1]); // 오늘 먹을 디저트의 절반만 누적
                     else
-                        dp[j][i] = Math.max(dp[j][i], dessert[j][i] + dp[k][i - 1]); // 아니면 다 누적
+                        dp[prevDessert][day] = Math.max(dp[prevDessert][day], dessert[prevDessert][day] + dp[todayDessert][day - 1]); // 아니면 다 누적
                 }
             }
         }
