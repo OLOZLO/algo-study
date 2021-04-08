@@ -18,8 +18,8 @@ public class Main_ja {
 			for (int j = start; j <= end; j++) {
 				day[j] += 1;
 			}
-		}
-		int result = 0;
+	}
+	int result = 0;
 		for (int i = 1; i < 366; i++) {
 			if (day[i] > 0) {
 				int col = 0;
