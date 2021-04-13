@@ -52,10 +52,10 @@ public class Main_ms {
         while (low <= high) {
             int mid = (low + high) / 2;
 
-            if (bfs(mid)) {
+            if (bfs(mid)) { // 목적지까지 BFS 탐색이 가능하면, low 값을 더 올려 중량 제한 범위를 높이고, mid 를 answer에 담아둡니다.
                 low = mid + 1;
                 answer = mid;
-            } else high = mid - 1;
+            } else high = mid - 1; // 목적지까지 BFS 탐색이 불가능하면, 중량 제한 최대치를 낮춘 범위에서 다시 확인합니다.
         }
 
         System.out.println(answer);
@@ -73,7 +73,7 @@ public class Main_ms {
             if (now == dest) return true;
 
             for (Edge next : adj[now]) {
-                if (!visit[next.vertex] && next.cost >= mid) {
+                if (!visit[next.vertex] && next.cost >= mid) { // mid 이상의 비용이 드는 간선들로만 BFS 탐색을 진행.
                     visit[next.vertex] = true;
                     queue.add(next.vertex);
                 }
