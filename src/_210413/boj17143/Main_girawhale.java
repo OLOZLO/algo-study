@@ -50,11 +50,12 @@ public class Main_girawhale {
 
             // 낚시왕이 위치한 열에서 아래로 내리면서 null이 아니라면 상어가 존재
             // 위치한 상어의 무게를 답에 더하고 map을 비우자!
-            int y = 1;
-            while (y <= R && map[y][pos] == null) y++;
-            if (y <= R && map[y][pos] != null) {
-                ans += map[y][pos].size; // 상어 무게 더해준당
-                map[y][pos] = null; // map에 상어가 사라졌어요!
+            for (int y = 1; y <= R; y++) {
+                if (map[y][pos] != null) {
+                    ans += map[y][pos].size; // 상어 무게 더해준당
+                    map[y][pos] = null; // map에 상어가 사라졌어요!
+                    break;
+                }
             }
 
             Queue<Shark> move = new LinkedList<>(); // 이동한 상어들의 정보들을 담을 Queue
