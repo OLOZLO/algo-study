@@ -3,7 +3,6 @@ package _210413.boj17143;
 import java.util.Scanner;
 
 public class Main_Taekyung2 {
-
     /**
      * [골드2] 낚시왕
      * 1. 결과 : 실패 ( 시간 부족 )
@@ -18,7 +17,6 @@ public class Main_Taekyung2 {
 
     static int R, C, M;
     // rd = 반대 방향
-    static int[] dy = {0, -1, 1, 0, 0}, dx = {0, 0, 0, 1, -1}, rd = {0, 2, 1 ,4, 3};
     // 바다
     static int[][] map;
     // 상어 배열
@@ -69,7 +67,6 @@ public class Main_Taekyung2 {
             }
 
             // 2. 상어 이동
-
             // 임시 배열 생성
             int[][] copy = new int[R + 1][C + 1];
 
@@ -83,41 +80,21 @@ public class Main_Taekyung2 {
                 }
 
                 // 상어 이동
-                int[] next = move(shark);
-                shark.y = next[0];
-                shark.x = next[1];
-                shark.d = next[2];
+                shark.move();
 
                 // 제일 큰 상어 빼고 죽인다
                 copy[shark.y][shark.x] = Math.max(shark.z, copy[shark.y][shark.x]);
             }
 
-            // 배열 복사
-            System.arraycopy(copy, 0, map, 0, copy.length);
+            map = copy;
         }
         return sum;
     }
 
 
-    public static int[] move(final Shark shark) {
-        int iter = shark.s, d = shark.d, y = shark.y, x = shark.x;
-
-        // 속도 만큼 이동
-        while(iter-- > 0) {
-            // 격자 끝이면 방향 바꿔준다
-            if((d == 1 && y == 1) || (d == 2 && y == R) || (d == 3 && x == C) || (d == 4 && x == 1))
-                d = rd[d];
-
-            y += dy[d];
-            x += dx[d];
-        }
-
-        return new int[]{y, x, d};
-    }
-
-
     static class Shark {
         int y, x, s, d, z;
+        static int[] dy = {0, -1, 1, 0, 0}, dx = {0, 0, 0, 1, -1}, rd = {0, 2, 1 ,4, 3};
 
         Shark(int y, int x, int s, int d, int z) {
             this.y = y;
@@ -125,6 +102,20 @@ public class Main_Taekyung2 {
             this.s = s;
             this.d = d;
             this.z = z;
+        }
+
+        void move() {
+            int iter = s;
+
+            // 속도 만큼 이동
+            while(iter-- > 0) {
+                // 격자 끝이면 방향 바꿔준다
+                if((d == 1 && y == 1) || (d == 2 && y == R) || (d == 3 && x == C) || (d == 4 && x == 1))
+                    d = rd[d];
+
+                y += dy[d];
+                x += dx[d];
+            }
         }
     }
 }
