@@ -82,10 +82,9 @@ public class Main_girawhale {
             while (!move.isEmpty()) {
                 Shark shark = move.poll();
 
-                if (map[shark.y][shark.x] != null) { // map이 null이 아니면 상어가 존재.
-                    if (map[shark.y][shark.x].size < shark.size) // 큰상어 냅두고 작은상어 없애자
-                        map[shark.y][shark.x] = shark;
-                } else map[shark.y][shark.x] = shark; // 현재 칸에 상어 없으니까 그냥 넣기 ㄱ
+		Shark sharkInMap = map[shark.y][shark.x];
+		if (sharkInMap == null || (sharkInMap != null && (sharkInMap.size < shark.size))) 
+		    map[shark.y][shark.x] = shark;
             }
         }
 
