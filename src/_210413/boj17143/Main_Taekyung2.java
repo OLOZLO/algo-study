@@ -76,8 +76,8 @@ public class Main_Taekyung2 {
             for(Shark shark : sharks) {
                 // 이미 죽은 상어면 넘어 감
                 if(shark.z == 0) continue;
-                // 같은 칸 상어들한테 잡아 먹힌 애들 사망 처리 해줌
-                if(map[shark.y][shark.x] < shark.z) {
+                // 죽은 상어들 표시
+                if(map[shark.y][shark.x] != shark.z) {
                     shark.z = 0;
                     continue;
                 }
