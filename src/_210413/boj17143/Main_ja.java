@@ -69,7 +69,7 @@ public class Main_ja {
 			int c = input[1] - 1;
 			map[r][c] = new Shark(input[2], input[3], input[4]);
 			// 제자리로 돌아오는 속력은 제외해서 저장
-			map[r][c].s %= 2 * ((map[r][c].d < 3 ? R : C) - 1);
+			map[r][c].size %= 2 * ((map[r][c].dir < 3 ? R : C) - 1);
 		}
 		
 		int result = 0;
@@ -86,7 +86,7 @@ public class Main_ja {
 			if (target == null)
 				continue;
 			map[r][c] = null;
-			return target.z;
+			return target.size;
 		}
 		return 0;
 	}
@@ -98,21 +98,20 @@ public class Main_ja {
 				Shark target = map[i][j];
 				if (target == null) continue;
 				
-				int r = i;
-				int c = j;
-				int s = target.s;
-				while (s-- > 0) { // 속력만큼 상어 이동
-					int mr = r + dt[target.d][0];
-					int mc = c + dt[target.d][1];
+				int r = i, c = j;
+				int size = target.size;
+				while (size-- > 0) { // 속력만큼 상어 이동
+					int mr = r + dt[target.dir][0];
+					int mc = c + dt[target.dir][1];
 					if (mr < 0 || mc < 0 || mr >= R || mc >= C) { // 범위 넘어가면 방향 바꾸고 다시 이동
-						target.d = reverseDir[target.d];
-						s++;
+						target.dir = reverseDir[target.dir];
+						size++;
 						continue;
 					}
 					r = mr;
 					c = mc;
 				}
-				if (newMap[r][c] != null && newMap[r][c].z > target.z) // 이동할 자리에 상어 있으면 크기 비교
+				if (newMap[r][c] != null && newMap[r][c].size > target.size) // 이동할 자리에 상어 있으면 크기 비교
 					continue;
 				newMap[r][c] = target;
 			}
@@ -121,14 +120,14 @@ public class Main_ja {
 	}
 
 	static class Shark {
-		int s;
-		int d;
-		int z;
+		int speed;
+		int dir;
+		int size;
 
-		public Shark(int s, int d, int z) {
-			this.s = s;
-			this.d = d;
-			this.z = z;
+		public Shark(int speed, int dir, int size) {
+			this.speed = speed;
+			this.dir = dir;
+			this.size = size;
 		}
 	}
 }

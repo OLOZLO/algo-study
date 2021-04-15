@@ -89,7 +89,7 @@ public class Main_ja {
 			for(Node next : bridge[cur.v]) {
 				int w = Math.min(cur.weight, next.weight); 
 				if(visited[next.v] || dist[next.v] >= w) continue; // 방문 또는 최대 중량 제한보다 작거나 같은 경우 pass
-				dist[next.v] = Math.max(w, dist[next.v]);
+				dist[next.v] = w;
 				pq.add(new Node(next.v, w));
 			}
 			visited[cur.v] = true;
