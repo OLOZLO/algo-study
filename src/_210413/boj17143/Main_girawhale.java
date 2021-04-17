@@ -82,9 +82,9 @@ public class Main_girawhale {
             while (!move.isEmpty()) {
                 Shark shark = move.poll();
 
-		Shark sharkInMap = map[shark.y][shark.x];
-		if (sharkInMap == null || (sharkInMap != null && (sharkInMap.size < shark.size))) 
-		    map[shark.y][shark.x] = shark;
+                Shark prevShark = map[shark.y][shark.x];
+                if (prevShark == null || prevShark.size < shark.size)
+                    map[shark.y][shark.x] = shark;
             }
         }
 

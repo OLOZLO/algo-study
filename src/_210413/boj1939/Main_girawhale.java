@@ -27,8 +27,8 @@ public class Main_girawhale {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        N = parseInt(st);
-        M = parseInt(st);
+        N = nextInt(st);
+        M = nextInt(st);
 
         adj = new ArrayList[N + 1];
         for (int i = 1; i <= N; i++)
@@ -36,14 +36,14 @@ public class Main_girawhale {
 
         while (M-- > 0) {
             st = new StringTokenizer(br.readLine());
-            int n1 = parseInt(st), n2 = parseInt(st), c = parseInt(st);
+            int n1 = nextInt(st), n2 = nextInt(st), c = nextInt(st);
 
             adj[n1].add(new int[]{n2, c});
             adj[n2].add(new int[]{n1, c});
         }
         st = new StringTokenizer(br.readLine());
-        start = parseInt(st);
-        dest = parseInt(st);
+        start = nextInt(st);
+        dest = nextInt(st);
 
         int s = 1, e = (int) 1e9; // 최소 1, 최대 10^9
         int ans = 0;
@@ -70,17 +70,17 @@ public class Main_girawhale {
             int cur = queue.poll();
             if (cur == dest) return true; // 주어진 값으로 도착점까지 탐색이 가능! true
 
-            for (int[] a : adj[cur]) {
-                if (a[1] < m || visit[a[0]]) continue; // 주어진 값보다 작은 도로는 탐색하지 못함. pass
+            for (int[] next : adj[cur]) {
+                if (next[1] < m || visit[next[0]]) continue; // 주어진 값보다 작은 도로는 탐색하지 못함. pass
 
-                visit[a[0]] = true;
-                queue.add(a[0]);
+                visit[next[0]] = true;
+                queue.add(next[0]);
             }
         }
         return false; // 도착 못하고 큐가 비어버림. false반환
     }
 
-    static int parseInt(StringTokenizer st) {
+    static int nextInt(StringTokenizer st) {
         return Integer.parseInt(st.nextToken());
     }
 
