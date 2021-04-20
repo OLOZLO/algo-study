@@ -1,4 +1,4 @@
-package _210413.boj19939;
+package _210413.boj1939;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
