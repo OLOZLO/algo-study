@@ -115,7 +115,7 @@ public class Main_jyj {
 			System.out.println();
 		} else {
 			for (int i = 0; i < k - 1; i++) {
-				System.out.print('*');
+				System.out.print('x');
 			}
 			System.out.println();
 		}
