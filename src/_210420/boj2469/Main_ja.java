@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Main_ja {
 	/**
 	 * [실버1] 사다리타기
-	 * 1. 결과 : 틀렸습니다. (58%)
+	 * 1. 결과 : 틀렸습니다. (58%) -> 수정 후, 성공한 코드
 	 * 2. 시간복잡도 : K*K*3? 
 	 * 
 	 * 3. 접근 방식
@@ -24,11 +24,11 @@ public class Main_ja {
 	 * 
 	 * 	- 예외 처리한 부분
 	 * 	(1) 가로막대('-')를 추가 했을 때, 해당 위치의 양 옆에 '-'가 있는지 확인 (두 개의 가로 막대가 직접 연결될 수 없다고 해서)
-	 *  (2) 1번 단계에서, 두 개의 알파벳의 도착 위치가 동일한 경우 -> 더 비교할 것 없이 'x'를 반환
-	 *  
+	 * 
 	 *  - 후기
 	 *  - 58%에서 틀린 이유가, 예외처리(1) 때문이라고 생각했음. 그래서 조건을 추가하다보니 코드가 매-우 더러워짐.
-	 *  
+	 *  - 예외처리(1)은 고려 안해도 된다고 문제에 써있드라.
+	 *  - 틀린 이유는, 세 가지(아래,왼쪽,오른쪽) 이동으로도 찾을 수 없는 경우를 체크하지 않아서 틀림!
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -74,10 +74,6 @@ public class Main_ja {
 					j += 2;
 				i--;
 			}
-			if (bottom[j] != -1) { // 도착지점이 같은 경우는, 더 올라가도 갈라질 수 없으므로 x 출력
-				System.out.println("x".repeat(K));
-				return;
-			}
 			bottom[j] = end[idx++];
 		}
 
@@ -96,7 +92,6 @@ public class Main_ja {
 					j += 2;
 				i++;
 			}
-
 			// 아래로 내려가면 도착할 수 있는 경우
 			// [ 이동 못하는 경우 ]
 			// 왼쪽, 오른쪽에 '-'가 없을 경우만 이동 가능
@@ -108,10 +103,9 @@ public class Main_ja {
 			}
 			// 왼쪽으로 가면 도착할 수 있는 경우
 			// [ 가로 막대를 설치 못하는 경우 ]
-			// - 가로('-') 막대를 기준으로 왼쪽, 오른쪽에 가로 막대가 있는 경우
 			// - 해당 위치에 가로 막대가 없다고 저장한 경우
-			if (j - 2 >= 0 && bottom[j - 2] == idx) {
-				if ( (j-3>=0 && map[i][j - 3] == '-') || map[i][j - 1] == '*' || (j + 1 < C && map[i][j + 1] == '-')) {
+			else if (j - 2 >= 0 && bottom[j - 2] == idx) {
+				if (map[i][j - 1] == '*') {
 					System.out.println("x".repeat(K));
 					return;
 				}
@@ -121,13 +115,17 @@ public class Main_ja {
 
 			// 오른쪽으로 가면 도착할 수 있는 경우
 			// 왼쪽과 동일하게 조건 확인
-			if (j + 2 < C && bottom[j + 2] == idx) {
-				if ( (j+3<C &&map[i][j + 3] == '-') || map[i][j + 1] == '*' || (j - 1 >= 0 && map[i][j - 1] == '-')) {
+			else if (j + 2 < C && bottom[j + 2] == idx) {
+				if (map[i][j + 1] == '*') {
 					System.out.println("x".repeat(K));
 					return;
 				}
 				map[i][j + 2] = '*';
 				map[i][j + 1] = '-';
+			}
+			else {
+				System.out.println("x".repeat(K));
+				return;
 			}
 			idx++;
 		}
