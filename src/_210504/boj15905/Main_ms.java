@@ -35,17 +35,14 @@ public class Main_ms {
 
         Collections.sort(list);  // 해결한 문제 내림차순으로(같다면 패널티 총합 오름차순으로) 정렬한다.
         int cnt = 0, answer = 0; // cnt : 등수, answer : 5등과 푼 문제 수는 같지만 패널티 차이로 수상하지 못한 학생들의 수
-        Pair fifth = null;       // fifth : 5등 정보를 담아둘 객체
+        Pair fifth = list.get(4);       // fifth : 최소 인원이 5명이니까 5등(인덱스 4)는 무조건 존재. 미리 찾아서 넣어두자.
 
         for (Pair now : list) {
             cnt++; // 한 명 들렀으니 등수 증가시킨다.
 
-            if (cnt == 5) {
-                fifth = now; // 5등이면 fifth에 정보를 보관한다.
-            }
-
-            if (cnt > 5 && fifth != null && fifth.solved == now.solved) { // 5등보다 밑인데(6이상), 5등과 푼 문제 수가 같다면 체크한다.
-                answer++;
+            if (cnt > 5) {
+                if (fifth.solved == now.solved) answer++; // 5등보다 밑인데(6이상), 5등과 푼 문제 수가 같다면 체크한다.
+                else break;                               // 다르면, 이제 그만.
             }
         }
 
