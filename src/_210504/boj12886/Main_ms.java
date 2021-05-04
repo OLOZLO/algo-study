@@ -42,11 +42,10 @@ public class Main_ms {
 
         Queue<int[]> q = new LinkedList<>();
         visit[stones[0]][stones[1]] = true;
-        q.add(new int[]{stones[0], stones[1]});
+        q.add(new int[]{stones[0], stones[1], stones[2]}); // 세 그룹을 모두 큐에 보관하자!
 
         while (!q.isEmpty()) {
-            int[] first = q.poll();
-            int[] now = {first[0], first[1], sum - first[0] - first[1]};
+            int[] now = q.poll();
 
             // 6가지 경우를 확인해봄.
             for (int i = 0; i < 3; i++) {
@@ -56,10 +55,10 @@ public class Main_ms {
                         int nx = now[i] + now[i];
                         int ny = now[j] - now[i];
 
-                        if (ny < 0 || visit[nx][ny]) continue; // nx개, ny개를 만든 기억이 있다면 더이상 진행 안함.
+                        if (visit[nx][ny]) continue; // nx개, ny개를 만든 기억이 있다면 더이상 진행 안함. ny는 무조건 1이상이므로 인덱스 검사를 할 필요가 없다.
 
                         visit[nx][ny] = true;
-                        q.add(new int[]{nx, ny});
+                        q.add(new int[]{nx, ny, sum - nx - ny}); // poll해서 세 번째 그룹의 돌 개수를 구하지 말고, 미리 계산해 넣어두자.
                     }
                 }
             }
