@@ -61,10 +61,7 @@ public class Main_girawhale {
                 int s1 = cur[group[0]];
                 int s2 = cur[group[1]];
 
-                int min = Math.min(s1, s2);
-                int max = Math.max(s1, s2);
-
-                int[] next = {max - min, min * 2, cur[group[2]]}; // 교환하고 나머지는 그냥 넣음
+                int[] next = {s2 - s1, s1 * 2, cur[group[2]]}; // 교환하고 나머지는 그냥 넣음
                 Arrays.sort(next); // 작은 순 정렬
 
                 if (visit[next[0]][next[1]]) continue;
