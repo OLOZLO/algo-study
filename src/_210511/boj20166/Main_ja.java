@@ -89,6 +89,7 @@ public class Main_ja {
 
 			}
 		}
+		
 		String result = "";
 		for (int i = 0; i < likeStr.size(); i++) {
 			result += strList.getOrDefault(likeStr.get(i), 0) + "\n";
