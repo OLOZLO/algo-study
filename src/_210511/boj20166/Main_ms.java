@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 /*
- *   1. 결과 : 맞았습니다(2/16)
+ *   1. 결과 : 맞았습니다(16/16)
  *   2. 시간복잡도 : O(NM)
  *       - 이유 : NXM 배열을 다 돌며 각 좌표에서 8^5개의 경우를 확인.
  *   3. 접근 방식
@@ -15,12 +15,14 @@ import java.util.StringTokenizer;
  *       - K개의 문자열을 해시맵에서 찾자. contains는 O(1)의 연산 속도니까 빠를 것.
  *   4. 후기
  *       - dfs 인자로 String 말고 StringBuilder로 어찌저찌 해볼라 했는데 왜 안되는 지 모르겠다.
- *       - 다 맞으려면 어케해야되는 지 내일 알아보겠다.. 메모리가 문제인듯?
+ *       - key 순회해서 정답을 다 못맞춘 것.
+ *       - 근데 메모리가 터질라함..
  */
 
 public class Main_ms {
     static int N, M, K;
     static char[][] map;
+    static String[] words;
     static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1}, dy = {-1, 0, 1, -1, 1, -1, 0, 1};
     static HashMap<String, Integer> hashMap;
 
@@ -31,10 +33,14 @@ public class Main_ms {
         M = stoi(st.nextToken());
         K = stoi(st.nextToken());
         map = new char[N][M];
+        words = new String[K];
         hashMap = new HashMap<>();
 
         for (int i = 0; i < N; i++) map[i] = br.readLine().toCharArray();
-        for (int i = 0; i < K; i++) hashMap.put(br.readLine(), 0); // 미리 K개 문자열 해시맵에 0번 등장한 걸로 초기 세팅.
+        for (int i = 0; i < K; i++) {
+            words[i] = br.readLine();
+            hashMap.put(words[i], 0); // 미리 K개 문자열 해시맵에 0번 등장한 걸로 초기 세팅.
+        }
 
         for (int i = 0; i < N; i++) { // NXM 다 돌며 dfs 수행.
             for (int j = 0; j < M; j++) {
@@ -43,7 +49,7 @@ public class Main_ms {
         }
 
         StringBuilder answer = new StringBuilder();
-        for (String key : hashMap.keySet()) answer.append(hashMap.get(key) + "\n");
+        for (String key : words) answer.append(hashMap.get(key) + "\n");
         System.out.println(answer);
     }
 
