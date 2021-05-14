@@ -72,7 +72,7 @@ public class Main_ja {
 			}else // 아니면 그대로 사용
 				res -= usedInDay[i];
 		}
-		return cnt <= M ? true : false; 
+		return cnt <= M; 
 	}
 
 	// 시초났던 solve
