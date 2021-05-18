@@ -60,28 +60,21 @@ public class Main_Taekyung2 {
             for(Point next : adj[cur.y][cur.x]) {
                 // 가봤던 곳이면 안가도 됨
                 if(visited[next.y][next.x]) continue;
+                light[next.y][next.x] = true;
 
                 // 불을 켰더니 내가 갈 수 있는 곳이라면 큐에 넣어야 됨
-                boolean isConnect = false;
                 for(int d = 0; d < 4; d++) {
                     int ny = next.y + dy[d];
                     int nx = next.x + dx[d];
                     if(ny < 0 || nx < 0 || ny >= N || nx >= N) continue;
                     // 내가 방문했던 곳이랑 인접해있는 곳에 불 켤 수 있으면 갈 수 있는 곳
                     if(visited[ny][nx]) {
-                        isConnect = true;
+                        visited[next.y][next.x] = true;
+                        q.add(next);
                         break;
                     }
                 }
-
-                if(isConnect) {
-                    visited[next.y][next.x] = true;
-                    q.add(next);
-                }
-
-                light[next.y][next.x] = true;
             }
-
 
             // 인접한 곳으로 이동하자
             for(int d = 0; d < 4; d++) {
