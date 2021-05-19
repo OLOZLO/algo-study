@@ -54,11 +54,11 @@ public class Main_ms {
                 int idx = 0;
 
                 while (idx < o1.converted.length && idx < o2.converted.length) {
-                    if (o1.converted[idx] == o2.converted[idx]) {
-                        idx++;
-                        continue;
+                    if (o1.converted[idx] != o2.converted[idx]) {
+                        return o1.converted[idx] - o2.converted[idx];
                     }
-                    return o1.converted[idx] - o2.converted[idx];
+
+                    idx++;
                 }
                 return o1.converted.length - o2.converted.length;
             }
