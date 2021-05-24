@@ -56,13 +56,9 @@ public class Main_ja {
 			words.add(new Word(i, word)); // 변환한 일반 알파벳 저장
 		}
 		
-		words.sort(new Comparator<Word>() { // 오름차순 정렬
-			@Override
-			public int compare(Word o1, Word o2) {
-				return o1.str.compareTo(o2.str);
-			}
-		});
-		words.forEach(word -> System.out.println(minsikWords.get(word.idx))); // 해당 인덱스의 민식어 단어 가져오기
+        words.stream()
+                .sorted(Comparator.comparing(o -> o.str))
+                .forEach(word -> System.out.println(minsikWords.get(word.idx)));
 	}
 	
 	static class Word{
