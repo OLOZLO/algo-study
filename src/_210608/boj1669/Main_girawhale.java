@@ -1,4 +1,4 @@
-package _210601._210608.boj1669;
+package _210608.boj1669;
 
 import java.util.Scanner;
 
